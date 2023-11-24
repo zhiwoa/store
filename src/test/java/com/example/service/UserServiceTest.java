@@ -30,6 +30,12 @@ public class UserServiceTest {
 
     }
 
-
+//测试登录功能
+    @Test
+    public void login(){
+        //一开始出现了一个问题：就是数据库中有的密码是没有加密过的，这个只能作为加密之后的校验
+        User user = iUserService.login("laji","123");
+        System.out.println(user);
+    }
 
 }

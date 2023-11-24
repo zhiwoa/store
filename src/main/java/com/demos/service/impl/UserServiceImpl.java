@@ -4,6 +4,7 @@ import com.demos.entity.User;
 import com.demos.mapper.UserMapper;
 import com.demos.service.IUserService;
 import com.demos.service.ex.InsertException;
+import com.demos.service.ex.PasswordNotMatchException;
 import com.demos.service.ex.UsernameDuplicateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,7 @@ public class UserServiceImpl implements IUserService {
             throw  new InsertException("在用户注册过程中产生了未知的异常");
         }
     }
+
     //定义一个md5的加密处理
     private String getMD5Password(String password,String salt){
         //md5加密算法方法的调用(三次加密)
@@ -60,4 +62,41 @@ public class UserServiceImpl implements IUserService {
         }
         return password;
     }
+
+
+    @Override
+    public User login(String username, String passwod) {
+        //1根据用户名称来查询用户的数据是否存在，如果不存在则抛出异常
+         User result = userMapper.findByusername(username);
+         if(result == null){
+             throw new UsernameDuplicateException("用户数据不存在");
+         }
+         //2检测用户的密码是否匹配
+        //2.1 获取到数据库中加密之后的密码
+        String oldPassword = result.getPassword();
+//        System.out.println(oldPassword);
+        //2.2 先获取盐值：上次再注册时所自动生成的盐值
+        String salt=result.getSalt();
+        //2.3 将用户的面按照相同的md5算法规则进行加密 这个的密码是在用户登录页面获取的
+        String newMd5Password =getMD5Password(passwod,salt);
+//        System.out.println(newMd5Password);
+        //3 将密码进行比较
+        if(!newMd5Password.equals(oldPassword)){
+            throw  new PasswordNotMatchException("用户密码错误");
+        }
+
+        //判断is_delete 字段是否为1 表示标记被删除
+        if(result.getIsDelete() == 1){
+            throw new UsernameDuplicateException("用户数据不存在");
+        }
+        //调用mapper层的findByUsername来查询数据 ，可以减少层与层之间的交互，提供了系统的性能
+        User user =new User();
+        user.setUid(result.getUid());//id
+        user.setUsername(result.getUsername());//用户名
+        user.setAvatar(result.getAvatar());//头像
+
+        return user;
+    }
+
 }
+
