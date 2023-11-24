@@ -1,0 +1,35 @@
+package com.example.mapper;
+
+import com.demos.entity.User;
+import com.demos.mapper.UserMapper;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@SpringBootTest//表示标注当前的类是一个测试类，不会随同项目打包发送
+//@RunWith(SpringRunner.class)
+public class UserMapperTests {
+    //userMapper  会报错：idea有检测的功能，接口是不能直接创建bean的（动态代理技术来解决）
+    //@Repository  在接口mapper加这个注解就不会报错；将持久层接口的实现类交给spring管理，并封装数据访问异常
+    @Autowired
+    private UserMapper userMapper;
+
+    @Test
+    public void insert(){
+        User user=new User();
+        user.setUsername("tom");
+        user.setPassword("123");
+        Integer row = userMapper.insert(user);
+        System.out.println(row);
+
+    }
+    @Test
+    public void findByusername(){
+
+        User username= userMapper.findByusername("tom");
+        System.out.println(username.toString());
+
+    }
+}
