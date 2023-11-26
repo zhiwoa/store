@@ -142,7 +142,7 @@
 
 <!--	js-->
 	<script type="text/javascript">
-		alert("4654654654654")
+		// alert("4654654654654")
 <!--监听注册按钮是否被点击		-->
 	$("#btn-reg").click(function (){
 		// 动态获取表单数据
@@ -155,12 +155,13 @@
 			dataType:"JSON",
 			success:function (json){
 				if(json.state == 200){
-					alert("注册成功")
+					alert("注册成功");
 				}else{
-					alert("注册失败")
+					alert("注册失败");
 				}
 			},
 			error:function (xhr){
+				alert("test2");
 				alert("注册时候产生未知的错误！"+xhr.status);
 			}
 		});
