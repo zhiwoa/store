@@ -19,7 +19,7 @@ public class UserServiceTest {
     public void reg(){
         try{
             User user =new User();
-            user.setUsername("BWGL2");
+            user.setUsername("test2");
             user.setPassword("123");
             iUserService.reg(user);
             System.out.println("ok");
@@ -36,6 +36,12 @@ public class UserServiceTest {
         //一开始出现了一个问题：就是数据库中有的密码是没有加密过的，这个只能作为加密之后的校验
         User user = iUserService.login("laji","123");
         System.out.println(user);
+    }
+
+    //测试密码修改功能
+    @Test
+    public void changePassword(){
+        iUserService.changePassword(22,"管理员","123","321");
     }
 
 }

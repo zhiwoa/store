@@ -8,4 +8,6 @@ public interface IUserService {
     //实现登录功能
     User login(String username,String passwod);
 
+    void changePassword(Integer uid,String username,String oldPassword,String newPassword);
+
 }

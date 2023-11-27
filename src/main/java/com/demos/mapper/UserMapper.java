@@ -3,8 +3,11 @@ package com.demos.mapper;
 import com.demos.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 /**
  * 用户模块的持久层接口**/
@@ -18,5 +21,13 @@ public interface UserMapper {
     Integer insert(User user);
 
     User findByusername(String username);
+
+
+    //开发时候遇到问题：多参数时候需要使用@Param("uid") 里面的参数需要与实体类的一样
+    Integer updatePasswordByUid(
+            @Param("uid") Integer uid, @Param("password")String password,
+            @Param("modifiedUser") String modifiedUser,@Param("modifiedTime") Date modifiedTime);//根据用户的uid 来修改用密码
+
+    User findByUid(Integer uid);//根据用户的id查询数据
 }
 

@@ -1,9 +1,6 @@
 package com.demos.Controller;
 
-import com.demos.service.ex.PasswordNotMatchException;
-import com.demos.service.ex.ServiceException;
-import com.demos.service.ex.UserNotFoundException;
-import com.demos.service.ex.UsernameDuplicateException;
+import com.demos.service.ex.*;
 import com.demos.utils.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,6 +29,9 @@ public class BaseController {
         else if(e instanceof ServiceException){
             result.setState(5000);
             result.setMessage("注册时候产生位置的异常");
+        } else if(e instanceof UpdateException){
+            result.setState(5001);
+            result.setMessage("更新数据时产生未知的异常");
         }
         return result;
     }
@@ -43,4 +43,5 @@ public class BaseController {
     protected final String getUsernameFromSession(HttpSession session){
         return session.getAttribute("username").toString();
     }
+
 }

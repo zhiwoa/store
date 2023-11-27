@@ -5,21 +5,45 @@ import com.demos.mapper.UserMapper;
 import com.demos.service.IUserService;
 import com.demos.service.ex.InsertException;
 import com.demos.service.ex.PasswordNotMatchException;
+import com.demos.service.ex.UpdateException;
 import com.demos.service.ex.UsernameDuplicateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements IUserService {
-  @Autowired
+    //密码的修改
+    @Override
+    public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
+        User result = userMapper.findByUid(uid);
+        if(result == null || result.getIsDelete() ==1){
+            throw  new UsernameDuplicateException("用户数据不存在");
+        }
+        //在页面写入的密码和数据库汇总的密码进行比较
+        String oldMd5Password =getMD5Password(oldPassword,result.getSalt());
+        if(!result.getPassword().equals(oldMd5Password)){
+            throw new PasswordNotMatchException("密码错误");
+        }
+        //将新密码设置到数据中,将新的密码进行加密再去更新
+        String newMd5Password = getMD5Password(newPassword,result.getSalt());
+       Integer rows= userMapper.updatePasswordByUid(uid,newMd5Password,username,new Date());
+       if(rows !=1){
+           throw new UpdateException("更新数据时候产生未知的异常");
+       }
+    }
+
+    @Autowired
   private UserMapper userMapper;
   //数据的插入
     @Override
     public void reg(User user) {
         String username=user.getUsername();//通过user 参数来获取传递过来的username
+
         User result = userMapper.findByusername(username);//判断用户是否被注册过（占用）
         if(result != null ){
             //抛出异常

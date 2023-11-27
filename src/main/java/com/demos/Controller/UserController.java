@@ -2,6 +2,7 @@ package com.demos.Controller;
 
 import com.demos.entity.User;
 import com.demos.service.IUserService;
+import com.demos.service.ex.PasswordNotMatchException;
 import com.demos.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class UserController extends BaseController{
     这两个名称项目，则将值注入到pojo对应属性上
     * */
     @RequestMapping("reg")
-    public JsonResult<Void> reg(User user){
+    public JsonResult<Void> reg(User user,HttpSession session){
         userService.reg(user);
         return new JsonResult<>(OK);
     }
@@ -58,5 +59,15 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
 //        System.out.println(getUidFromSession(session));
 //        System.out.println(getUsernameFromSession(session));
         return new JsonResult<User>(OK,data);
+    }
+
+    // 修改密码
+    @RequestMapping("change_Password")
+    public JsonResult<Void> changePassword(String oldPassword,String newPassword,
+                                           HttpSession session){
+        Integer uid =getUidFromSession(session);//获取之前登录时候存入的uid session
+        String username=getUsernameFromSession(session);//获取之前登录时候存入的username session
+        userService.changePassword(uid,username,oldPassword,newPassword);
+        return new JsonResult<>(OK);
     }
 }

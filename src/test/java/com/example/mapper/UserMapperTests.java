@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 @SpringBootTest//表示标注当前的类是一个测试类，不会随同项目打包发送
 //@RunWith(SpringRunner.class)
 public class UserMapperTests {
@@ -31,5 +33,14 @@ public class UserMapperTests {
         User username= userMapper.findByusername("tom");
         System.out.println(username.toString());
 
+    }
+    @Test
+    public void updatePasswordByUid(){
+        userMapper.updatePasswordByUid(12,"321","管理员",new Date());
+
+    }
+    @Test
+    public void findByUid(){
+        System.out.println(userMapper.findByUid(12));
     }
 }
