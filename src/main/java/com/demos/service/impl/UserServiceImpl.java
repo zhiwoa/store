@@ -3,10 +3,7 @@ package com.demos.service.impl;
 import com.demos.entity.User;
 import com.demos.mapper.UserMapper;
 import com.demos.service.IUserService;
-import com.demos.service.ex.InsertException;
-import com.demos.service.ex.PasswordNotMatchException;
-import com.demos.service.ex.UpdateException;
-import com.demos.service.ex.UsernameDuplicateException;
+import com.demos.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -17,6 +14,38 @@ import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
+    //需要显示在修改页面的信息
+    @Override
+    public User getByuid(Integer uid) {
+        User result=userMapper.findByUid(uid);
+        if(result == null || result.getIsDelete() == 1){
+            throw new UserNotFoundException("用户数据没有找到");
+        }
+        User user =new User();
+        user.setUsername(result.getUsername());
+        user.setPhone(result.getPhone());
+        user.setEmail(result.getEmail());
+        user.setGender(result.getGender());
+        return user;
+    }
+
+    @Override
+    public void changeInfo(Integer uid, String username, User user) {
+        User result=userMapper.findByUid(uid);
+        if(result == null || result.getIsDelete() == 1){
+            throw new UserNotFoundException("用户数据没有找到");
+        }
+        user.setUid(uid);
+        user.setModifiedUser(username);
+        user.setModifiedTime(new Date());
+        Integer rows=userMapper.UpdateInfoByUid(user);
+        if(rows != 1){
+            throw new UpdateException("更新时候时产生未知的异常");
+        }
+    }
+
+
     //密码的修改
     @Override
     public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {

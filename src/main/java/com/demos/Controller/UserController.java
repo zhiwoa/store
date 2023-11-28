@@ -4,8 +4,11 @@ import com.demos.entity.User;
 import com.demos.service.IUserService;
 import com.demos.service.ex.PasswordNotMatchException;
 import com.demos.utils.JsonResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -39,9 +42,17 @@ public class UserController extends BaseController{
     这两个名称项目，则将值注入到pojo对应属性上
     * */
     @RequestMapping("reg")
-    public JsonResult<Void> reg(User user,HttpSession session){
-        userService.reg(user);
-        return new JsonResult<>(OK);
+    public JsonResult<Void> reg(User user,
+                                HttpSession session,
+                                @RequestParam("password") String password,
+                                @RequestParam("registernewpassword") String registernewpassword){
+        if(!password.equals(registernewpassword)){
+            throw new PasswordNotMatchException("密码不匹配");
+        }else{
+            userService.reg(user);
+        }
+            return new JsonResult<>(OK);
+
     }
 
     /*2、接受数据方式：请求处理的方法的参数列表设置为非pojo类型来接受前端的数据
@@ -64,10 +75,23 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
     // 修改密码
     @RequestMapping("change_Password")
     public JsonResult<Void> changePassword(String oldPassword,String newPassword,
-                                           HttpSession session){
-        Integer uid =getUidFromSession(session);//获取之前登录时候存入的uid session
-        String username=getUsernameFromSession(session);//获取之前登录时候存入的username session
-        userService.changePassword(uid,username,oldPassword,newPassword);
+                                           HttpSession session, @RequestParam("newPassword") String password,
+                                           @RequestParam("midifynewpassword") String midifynewpassword){
+        if(!password.equals(midifynewpassword)){
+            throw new PasswordNotMatchException("密码不匹配");
+        }else{
+            Integer uid =getUidFromSession(session);//获取之前登录时候存入的uid session
+            String username=getUsernameFromSession(session);//获取之前登录时候存入的username session
+            userService.changePassword(uid,username,oldPassword,newPassword);
+        }
         return new JsonResult<>(OK);
     }
+
+    //用过uid获取数据显示到修改个人信息的表单中
+    @RequestMapping("get_by_uid")
+    public JsonResult<User> getByUid(HttpSession session){
+        return new JsonResult<>(OK);
+    }
+
+
 }

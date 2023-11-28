@@ -10,4 +10,7 @@ public interface IUserService {
 
     void changePassword(Integer uid,String username,String oldPassword,String newPassword);
 
+    User getByuid(Integer uid);//根据uid来查询用户信息
+
+    void changeInfo(Integer uid,String username,User user);//session提供的uid和username 来显示修改信息页面
 }
