@@ -54,4 +54,12 @@ public class UserMapperTests {
       user.setGender(1);
       userMapper.UpdateInfoByUid(user);
     }
+
+
+    @Test
+    public void UpdateAvatarByUid(){
+        userMapper.UpdateAvatarByUid(
+                33,"/upload/avatar.png","管理员",new Date()
+        );
+    }
 }

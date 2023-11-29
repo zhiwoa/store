@@ -46,12 +46,18 @@ public class UserController extends BaseController{
                                 HttpSession session,
                                 @RequestParam("password") String password,
                                 @RequestParam("registernewpassword") String registernewpassword){
+        JsonResult<Void> result =new JsonResult<>();
+
+        JsonResult<Void> voidJsonResult = handleException(new Throwable());
+        System.out.println(voidJsonResult.getState());
         if(!password.equals(registernewpassword)){
-            throw new PasswordNotMatchException("密码不匹配");
+            result.setState(123);
+            return new JsonResult<>(result.getState());
         }else{
             userService.reg(user);
         }
-            return new JsonResult<>(OK);
+
+        return new JsonResult<>(OK);
 
     }
 
@@ -90,8 +96,24 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
     //用过uid获取数据显示到修改个人信息的表单中
     @RequestMapping("get_by_uid")
     public JsonResult<User> getByUid(HttpSession session){
-        return new JsonResult<>(OK);
+        User data = userService.getByuid(getUidFromSession(session));
+//        System.out.println(getUidFromSession(session));
+        //http://localhost:8080/users/get_by_uid  测试访问查看页面是否有数据
+        return new JsonResult<>(OK,data);
     }
 
+    //完成个人信息修改操作
+    @RequestMapping("change_info")
+    public JsonResult<User> changeInfo(User user,HttpSession session){
+        //user 对象有username，phone，email。gender
+        // uid 数据需要再次封装到user对象中
+        Integer uid =getUidFromSession(session);
+        String username=getUsernameFromSession(session);
+        userService.changeInfo(uid,username,user);
+
+        //写完程序之后测试一下
+//        http://localhost:8080/users/change_info?phone=987654321&email=test7@aaq&gender=0
+        return new JsonResult<>(OK);
+    }
 
 }

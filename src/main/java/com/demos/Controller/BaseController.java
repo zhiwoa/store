@@ -2,6 +2,7 @@ package com.demos.Controller;
 
 import com.demos.service.ex.*;
 import com.demos.utils.JsonResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
@@ -27,10 +28,10 @@ public class BaseController {
             result.setMessage("用户的密码错误异常");
         }
         else if(e instanceof ServiceException){
-            result.setState(5000);
+            result.setState(5003);
             result.setMessage("注册时候产生位置的异常");
         } else if(e instanceof UpdateException){
-            result.setState(5001);
+            result.setState(5004);
             result.setMessage("更新数据时产生未知的异常");
         }
         return result;

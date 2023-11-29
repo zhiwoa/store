@@ -154,6 +154,9 @@
 			data: $("#form-reg").serialize(),
 			dataType:"JSON",
 			success:function (json){
+				if(json.state == 123){
+					alert("密码不匹配");
+				}else
 				if(json.state == 200){
 					alert("注册成功");
 				}else{

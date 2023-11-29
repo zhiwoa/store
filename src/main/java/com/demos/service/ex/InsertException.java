@@ -2,6 +2,8 @@ package com.demos.service.ex;
 
 //数据插入异常
 public class InsertException  extends ServiceException{
+    int errId;
+    String messgeErr;
     public InsertException() {
         super();
     }

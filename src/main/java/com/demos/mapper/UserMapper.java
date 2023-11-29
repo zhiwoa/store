@@ -31,5 +31,10 @@ public interface UserMapper {
     User findByUid(Integer uid);//根据用户的id查询数据
 
     Integer UpdateInfoByUid(User user);//修改个人资料
+
+    Integer UpdateAvatarByUid(@Param("uid") Integer uid,
+                              @Param("avatar")String avatar,
+                              @Param("modifiedUser") String modifiedUser,
+                              @Param("modifiedTime") Date modifiedTime);//根据用户的uid来修改用户的头像
 }
 
