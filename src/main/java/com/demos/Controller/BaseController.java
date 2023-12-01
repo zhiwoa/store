@@ -1,5 +1,6 @@
 package com.demos.Controller;
 
+import com.demos.Controller.ex.*;
 import com.demos.service.ex.*;
 import com.demos.utils.JsonResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +14,7 @@ public class BaseController {
     //请求处理方法：这个方法的返回值就是需要传递给前端的数据
     //自动将异常对象传递给此方法的阐述列表上
     //当项目中产生了异常，被统一拦截到此方法中，这个方法此时就充当的是请求处理方法，方法的返回值返回到前端中
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class,FileUploadException.class})
     public JsonResult<Void> handleException(Throwable e){
         JsonResult<Void> result =new JsonResult<>(e);
         //如果异常数据 该类型  就做下列操作
@@ -33,6 +34,18 @@ public class BaseController {
         } else if(e instanceof UpdateException){
             result.setState(5004);
             result.setMessage("更新数据时产生未知的异常");
+        }
+
+        else if(e instanceof FileEmptyException){
+            result.setState(6000);
+        }else if(e instanceof FileSizeException){
+            result.setState(6001);
+        }else if(e instanceof FileTypexception){
+            result.setState(6002);
+        }else if(e instanceof FileStateException){
+            result.setState(6003);
+        }else if(e instanceof FileUploadIOException){
+            result.setState(6004);
         }
         return result;
     }

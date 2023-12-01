@@ -15,6 +15,21 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements IUserService {
 
+    //更新个人头像
+    @Override
+    public void changeAvatar(Integer uid, String avatar, String username) {
+        User result=userMapper.findByUid(uid);
+        if(result == null || result.getIsDelete() == 1){
+            throw new UserNotFoundException("用户数据没有找到");
+        }
+
+        Integer rows = userMapper.UpdateAvatarByUid(uid, avatar, username, new Date());
+        if(rows != 1){
+            throw new UpdateException("更新用户头像产生未知的异常");
+        }
+
+    }
+
     //需要显示在修改页面的信息
     @Override
     public User getByuid(Integer uid) {
@@ -44,6 +59,8 @@ public class UserServiceImpl implements IUserService {
             throw new UpdateException("更新时候时产生未知的异常");
         }
     }
+
+
 
 
     //密码的修改
