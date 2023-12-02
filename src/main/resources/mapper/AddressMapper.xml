@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demos.mapper.AddressMapper">
+
+    <!-- 自定义映射规则：resultMap
+     id：设置这个映射负责一个唯一的id值，对应的就是resultMap=“ id ”属性的取值
+     tyep：取值是一个类，表示的是数据库中查询结果与java中哪个实体类进行结果集的映射
+-->
+    <resultMap id="AddressEntityMap" type="com.demos.entity.Address">
+        <!--  将表的资源不一致的字段进行匹配指定，名称一定的字段可以省略不写  主键不能省略    -->
+        <result column="aid" property="aid"></result>
+        <result column="province_code" property="provinceCode"></result>
+        <result column="province_name" property="provinceName"></result>
+        <result column="city_code" property="cityCode"></result>
+        <result column="city_name" property="cityName"></result>
+        <result column="area_code" property="areaCode"></result>
+        <result column="area_name" property="areaName"></result>
+        <result column="is_default" property="isDefault"></result>
+        <result column="created_user" property="createdUser"></result>
+        <result column="created_time " property="createdTime"></result>
+        <result column="modified_user " property="modifiedUser"></result>
+        <result column="modified_time " property="modifiedTime"></result>
+    </resultMap>
+
+    <!--    useGeneratedKeys="true"开启某个字段的值递增 keyProperty="uid" 将表中的哪个字段作为主键递增-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="aid">
+        insert into t_address(uid,name,province_name,province_code,city_name,
+            city_code,area_name,area_code,zip,address,phone,tel,tag,is_default,
+            created_user,created_time,modified_user,modified_time
+        )values (#{uid},#{name},#{provinceName},#{provinceCode},#{cityName},#{cityCode},
+                 #{areaName},#{areaCode},#{zip},#{address},#{phone},#{tel},
+                 #{tag},#{isDefault},#{createdTime},#{createdUser},#{modifiedUser},#{modifiedTime}
+        )
+    </insert>
+
+<!--    resultMap="UserEntityMap"  这个返回的是一个结果集，不适用于下面返回的记录条数  -->
+    <select id="countByUid" resultType="java.lang.Integer">
+        select count(*) from t_address where uid=#{uid}
+    </select>
+</mapper>

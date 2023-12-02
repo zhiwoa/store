@@ -152,7 +152,7 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
             throw new FileTypexception("文件类型不支持");
         }
         //上传的文件.../upload/文件/.png
-        String parent = session.getServletContext().getRealPath("upload");
+        String parent = session.getServletContext().getRealPath("/upload");
 
         //File对象指向这个路径，File是否存在
         File dir =new File(parent);
@@ -161,7 +161,7 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
         }
         //获取这个文件名称，UUID工具来讲生成一个新的字符串作为文件名
         String originalFilename = file.getOriginalFilename();
-        System.out.println(originalFilename);
+//        System.out.println(originalFilename);
         int index = originalFilename.lastIndexOf(".");
         String suffix = originalFilename.substring(index);
         String filename= UUID.randomUUID().toString().toString()+suffix;

@@ -9,7 +9,7 @@ public class User extends  BaseEntity{
     private String phone; //VARCHAR(20) COMMENT '电话号码',
     private String email; //VARCHAR(30) COMMENT '电子邮箱',
     private Integer gender; //INT COMMENT '性别:0-女，1-男',
-    private Integer avatar; //VARCHAR(50) COMMENT '头像',
+    private String  avatar; //VARCHAR(50) COMMENT '头像',
     private Integer isDelete; //INT COMMENT '是否删除：0-未删除，1-已删除',
 
     public Integer getUid() {
@@ -40,7 +40,7 @@ public class User extends  BaseEntity{
         return gender;
     }
 
-    public Integer getAvatar() {
+    public String  getAvatar() {
         return avatar;
     }
 
@@ -76,7 +76,7 @@ public class User extends  BaseEntity{
         this.gender = gender;
     }
 
-    public void setAvatar(Integer avatar) {
+    public void setAvatar(String  avatar) {
         this.avatar = avatar;
     }
 

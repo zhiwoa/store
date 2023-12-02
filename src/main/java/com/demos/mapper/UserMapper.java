@@ -20,6 +20,7 @@ public interface UserMapper {
      * **/
     Integer insert(User user);
 
+
     User findByusername(String username);
 
 
@@ -36,5 +37,8 @@ public interface UserMapper {
                               @Param("avatar")String avatar,
                               @Param("modifiedUser") String modifiedUser,
                               @Param("modifiedTime") Date modifiedTime);//根据用户的uid来修改用户的头像
+
+
+
 }
 
