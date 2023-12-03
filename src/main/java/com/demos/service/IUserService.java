@@ -18,4 +18,5 @@ public interface IUserService {
     void changeAvatar(Integer uid,
                       String avatar,
                       String username);//更新个人头像业务层
+
 }

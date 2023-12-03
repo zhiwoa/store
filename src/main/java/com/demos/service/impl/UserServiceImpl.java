@@ -61,8 +61,6 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
-
     //密码的修改
     @Override
     public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
@@ -164,6 +162,7 @@ public class UserServiceImpl implements IUserService {
         user.setUid(result.getUid());//id
         user.setUsername(result.getUsername());//用户名
         user.setAvatar(result.getAvatar());//头像
+//        System.out.println(result.getAvatar());
 
         return user;
     }

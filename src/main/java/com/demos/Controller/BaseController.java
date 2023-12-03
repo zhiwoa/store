@@ -22,20 +22,22 @@ public class BaseController {
             result.setState(4000);
             result.setMessage("用户名被占用");
         }else if(e instanceof UserNotFoundException){
-            result.setState(5001);
+            result.setState(4001);
             result.setMessage("用户不存在");
         }else if(e instanceof PasswordNotMatchException){
-            result.setState(5002);
+            result.setState(4002);
             result.setMessage("用户的密码错误异常");
         }
         else if(e instanceof ServiceException){
-            result.setState(5003);
+            result.setState(4003);
             result.setMessage("注册时候产生位置的异常");
         } else if(e instanceof UpdateException){
-            result.setState(5004);
+            result.setState(4004);
             result.setMessage("更新数据时产生未知的异常");
+        }else if(e instanceof AddressCountLimitException){
+            result.setState(4005);
+            result.setMessage("用户的收货地址超出上限");
         }
-
         else if(e instanceof FileEmptyException){
             result.setState(6000);
         }else if(e instanceof FileSizeException){

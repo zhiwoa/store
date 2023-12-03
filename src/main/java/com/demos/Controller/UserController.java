@@ -7,10 +7,9 @@ import com.demos.service.ex.PasswordNotMatchException;
 import com.demos.utils.JsonResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -137,7 +136,6 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
     @RequestMapping("change_avatar")
     public JsonResult<String>changeAvatar(HttpSession session,
                                        @RequestParam("file") MultipartFile file){
-
         //判断文件是否为空
         if(file.isEmpty()){
             throw new FileEmptyException("文件为空");
@@ -187,5 +185,6 @@ SpringBoot会将前端的Url地址中的参数名和pojo类的属性名进行比
         //返回用户头像的路径黑前端页面，将来用于头像展示使用
         return  new JsonResult<>(OK,avatar);
     }
+
 
 }

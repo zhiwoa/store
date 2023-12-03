@@ -31,7 +31,7 @@
             created_user,created_time,modified_user,modified_time
         )values (#{uid},#{name},#{provinceName},#{provinceCode},#{cityName},#{cityCode},
                  #{areaName},#{areaCode},#{zip},#{address},#{phone},#{tel},
-                 #{tag},#{isDefault},#{createdTime},#{createdUser},#{modifiedUser},#{modifiedTime}
+                 #{tag},#{isDefault},#{createdUser},#{createdTime},#{modifiedUser},#{modifiedTime}
         )
     </insert>
 

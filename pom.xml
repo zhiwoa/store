@@ -39,6 +39,14 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        自动生成对象类的各中方法-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

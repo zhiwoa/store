@@ -248,9 +248,11 @@
 		<!--页脚结束-->
 		<script type="text/javascript">
 			$(document).ready(function (){
+
 				let avatar = $.cookie("avatar");
-				console.log(avatar);
-				$("#img-avatar").attr("src",avatar);
+					$("#img-avatar").attr("src",avatar);
+				// console.log(avatar);
+
 			});
 			$("#btn-change-avatar").click(function (){
 				// 动态获取表单数据
@@ -272,7 +274,7 @@
 							// 第一次的时候出来没有出来，clear install 一下就行了
 							// if(json.data.avatar !== null && json.data.avatar !==""){
 								$("#img-avatar").attr("src",json.data);
-								$.cookie("avatar",json.data,{expires: 7});
+								$.cookie("avatar", json.data, {expires: 7});
 							// }else{
 							// 	$("#img-avatar").attr("src","../images/index/user.jpg");
 							// }
