@@ -11,4 +11,7 @@ public interface IDistrictService {
      * @return   多个区域的信息
      */
     List<District> getByParent(String parent);
+
+//通过编号来找特定的省名称
+    String getNameByCode(String code);
 }

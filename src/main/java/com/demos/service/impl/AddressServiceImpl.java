@@ -4,6 +4,7 @@ import com.demos.entity.Address;
 import com.demos.entity.BaseEntity;
 import com.demos.mapper.AddressMapper;
 import com.demos.service.IAddressService;
+import com.demos.service.IDistrictService;
 import com.demos.service.ex.AddressCountLimitException;
 import com.demos.service.ex.InsertException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ import java.util.Date;
 public class AddressServiceImpl implements IAddressService {
     @Autowired
     private AddressMapper addressMapper;
+
+    //再添加用户的收货地址业务层依赖于IDistrictService
+    @Autowired
+    private IDistrictService districtService;
     @Value("${user.address.max-count}")
     private Integer maxCount;
 
@@ -27,6 +32,16 @@ public class AddressServiceImpl implements IAddressService {
         if (count >= maxCount){
             throw new AddressCountLimitException("收获地址超出上限额");
         }
+
+        //对address对象中的数据进行补全：省市区
+        String ProvinceName = districtService.getNameByCode(address.getProvinceCode());
+        String CityName = districtService.getNameByCode(address.getCityCode());
+        String AreaName = districtService.getNameByCode(address.getAreaCode());
+        address.setProvinceName(ProvinceName);
+        address.setCityName(CityName);
+        address.setAreaName(AreaName);
+
+
         address.setUid(uid);
         Integer isDefault = count == 0 ? 1 : 0;//0不默认，1-默认
         address.setIsDefault(isDefault);//当记录条数为0时候。用户所增加的第一条收货地址设置为默认收货地址

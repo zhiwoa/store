@@ -7,4 +7,8 @@
     <select id="findByparent" resultType="com.demos.entity.District">
         select  *  from t_dict_district  where parent=#{parent} order by  code ASC
     </select>
+
+    <select id="findNameByCode" resultType="java.lang.String">
+        select name from t_dict_district where code=#{code}
+    </select>
 </mapper>

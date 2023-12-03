@@ -42,7 +42,8 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
                                      "/web/product.html",
                                      "/users/reg",
                                      "/users/login",
-                                     "/web/login.html");
+                                     "/web/login.html",
+                                     "/districts/**");
 
     }
 

@@ -23,4 +23,9 @@ public class DistictServiceTest {
             System.out.println(d);
         }
     }
+
+    @Test
+    public void findNameByCode() {
+        System.out.println(districtService.getNameByCode("610000"));
+    }
 }
