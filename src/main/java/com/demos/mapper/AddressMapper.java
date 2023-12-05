@@ -2,6 +2,8 @@ package com.demos.mapper;
 
 import com.demos.entity.Address;
 
+import java.util.List;
+
 /**
  * 收获地址持久层接口
  */
@@ -19,4 +21,11 @@ public interface AddressMapper {
      * @return  当前用户的收货地址总数
      */
     Integer countByUid(Integer uid);
+
+    /**
+     * 根据用户的id查询用户的收货地址数据
+     * @param uid  用户的id
+     * @return   收货地址
+     */
+    List<Address> findyByUid(Integer uid);
 }

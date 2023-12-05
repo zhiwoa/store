@@ -39,4 +39,8 @@
     <select id="countByUid" resultType="java.lang.Integer">
         select count(*) from t_address where uid=#{uid}
     </select>
+    <select id="findyByUid"  resultMap="AddressEntityMap">
+        select * from t_address where uid=#{uid}
+        order by is_default desc,modified_time desc
+    </select>
 </mapper>

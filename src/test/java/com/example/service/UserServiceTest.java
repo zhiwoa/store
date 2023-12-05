@@ -64,4 +64,6 @@ public class UserServiceTest {
 
         iUserService.changeAvatar(31,"/upload/test.png","小明");
     }
+
+
 }

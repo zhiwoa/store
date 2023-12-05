@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController//== @Controller + @RequestBody 表示此方法的响应结果以json格式进行数据的响应到前端
 @RequestMapping("addresses")
@@ -23,5 +24,10 @@ public class AddressController extends BaseController{
         addressService.addNewAddress(uid,username,address);
         return new JsonResult<>(OK);
     }
-
+    @RequestMapping({"","/"})
+    public JsonResult<List<Address>> getByUid(Address address, HttpSession session){
+        Integer uid = getUidFromSession(session);
+        List<Address> data = addressService.getByUid(uid);
+        return new JsonResult<>(OK,data);
+    }
 }

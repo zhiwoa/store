@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest//表示标注当前的类是一个测试类，不会随同项目打包发送
 //@RunWith(SpringRunner.class)
@@ -33,4 +34,11 @@ public class AddressMapperTests {
         System.out.println(rows);
     }
 
+    @Test
+    public void findyByUid(){
+        List<Address> addresses = addressMapper.findyByUid(34);
+        for(Address a:addresses){
+            System.out.println(a+" ");
+        }
+    }
 }
