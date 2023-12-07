@@ -4,6 +4,7 @@ import com.demos.entity.Address;
 import com.demos.entity.User;
 import com.demos.mapper.AddressMapper;
 import com.demos.mapper.UserMapper;
+import org.apache.ibatis.annotations.Param;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,4 +42,22 @@ public class AddressMapperTests {
             System.out.println(a+" ");
         }
     }
+    @Test
+   public  void findByAid(){
+        Address byAid = addressMapper.findByAid(10);
+        System.out.println(byAid.toString());
+    }
+   @ Test
+   public  void updateNonDefault(){
+        addressMapper.updateNonDefault(34);
+    }
+
+     @Test
+    public void updateDefaultByAid(){
+        addressMapper.updateDefaultByAid(11,"guanliyuan",new Date());
+    }
+
+
+
+
 }

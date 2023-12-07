@@ -14,4 +14,12 @@ public interface IAddressService {
      * @return  用户的收货信息
      */
     List<Address> getByUid(Integer uid);
+
+    /**
+     * 修改某个用户的某条收货地址为默认地址
+     * @param aid 地址的id
+     * @param uid  用户的id
+     * @param name 用户的名字
+     */
+    void updateSetDefault(Integer aid,Integer uid,String name);
 }

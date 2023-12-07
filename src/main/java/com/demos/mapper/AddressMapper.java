@@ -1,7 +1,9 @@
 package com.demos.mapper;
 
 import com.demos.entity.Address;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,4 +30,27 @@ public interface AddressMapper {
      * @return   收货地址
      */
     List<Address> findyByUid(Integer uid);
+
+    /**
+     * 根据aid 查询收获地址数据（在处理默认地址时候使用）
+     * @param aid  收获地址id
+     * @return  收货地址数据，，没有则返回null
+     */
+    Address findByAid(Integer aid);
+
+    /**
+     * 根据用户的uid来修改用户的收货地址设置为非默认在设置默认地址时候使用）
+     * @param uid 用户的id值
+     * @return 受影响的行数
+     */
+    Integer updateNonDefault(Integer uid);
+
+    /**
+     * 核心方法（在设置默认地址时候使用）
+     * @param aid 用户的id值
+     * @return 受影响的行数
+     */
+    Integer updateDefaultByAid(@Param("aid") Integer aid,
+                               @Param("modifiedUser") String modifiedUser,
+                               @Param("modifiedTime") Date modifiedTime);
 }

@@ -5,6 +5,7 @@ import com.demos.service.IAddressService;
 import com.demos.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,15 @@ public class AddressController extends BaseController{
         Integer uid = getUidFromSession(session);
         List<Address> data = addressService.getByUid(uid);
         return new JsonResult<>(OK,data);
+    }
+
+    @RequestMapping("{aid}/set_default")
+    public JsonResult<Void> setDefalt(@PathVariable("aid")Integer aid,HttpSession session){
+        addressService.updateSetDefault(
+                aid,
+                getUidFromSession(session),
+                getUsernameFromSession(session)
+        );
+        return new JsonResult<>(OK);
     }
 }
