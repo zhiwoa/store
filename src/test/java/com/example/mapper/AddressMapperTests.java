@@ -57,7 +57,16 @@ public class AddressMapperTests {
         addressMapper.updateDefaultByAid(11,"guanliyuan",new Date());
     }
 
+    @ Test
+    public  void delete(){
+     addressMapper.deleteByAid(10);
+    }
 
+    @Test
+    public void findlastmodified(){
+        Address lastModefied = addressMapper.findLastModefied(34);
+        System.out.println(lastModefied.toString());
+    }
 
 
 }

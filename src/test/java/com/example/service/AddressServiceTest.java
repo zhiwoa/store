@@ -34,4 +34,9 @@ public class AddressServiceTest {
         addressService.updateSetDefault(10,34,"aaaa");
     }
 
+    @Test
+    public void delete(){
+//        测试包括：不是默认地址的也能正常删除，是默认地址的，删除之后把最近修改的一个作为新的默认地址
+        addressService.delete(12,34,"23");
+    }
 }

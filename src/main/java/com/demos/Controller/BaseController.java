@@ -43,6 +43,9 @@ public class BaseController {
         }else if(e instanceof AccessDeniedException){
             result.setState(4007);
             result.setMessage("收货数据非法访问的异常");
+        }else if(e instanceof DeleteException){
+            result.setState(4008);
+            result.setMessage("删除数据时候产生未知的异常");
         }
 
 

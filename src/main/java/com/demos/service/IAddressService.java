@@ -22,4 +22,7 @@ public interface IAddressService {
      * @param name 用户的名字
      */
     void updateSetDefault(Integer aid,Integer uid,String name);
+
+//    删除收货信息
+    void delete(Integer aid,Integer uid,String username);
 }

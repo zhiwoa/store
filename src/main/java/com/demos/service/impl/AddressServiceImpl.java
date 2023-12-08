@@ -14,6 +14,38 @@ import java.util.List;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
+    //删除收货信息
+    @Override
+    public void delete(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if(result == null){
+            throw new AddressNotFoundException("收货地址不存在");
+        }
+        //检测当前获取到的收货地址是数据归属
+        if(!result.getUid().equals(uid)){
+            throw new AccessDeniedException("非法访问");
+        }
+        Integer rows = addressMapper.deleteByAid(aid);
+        if (rows != 1){
+            throw new DeleteException("删除时候产生未知的异常");
+        }
+        Integer count = addressMapper.countByUid(uid);
+        if(count == 0){
+            return;//收货地址为0 ，删除操作停止
+        }
+
+        //如果删除的是默认地址，才会把最近修改的收货信息改为默认地址
+        if(result.getIsDefault() ==1){
+            //将这条数据中的isdefault字符设置为1
+            Address  lastModefied= addressMapper.findLastModefied(uid);
+            rows = addressMapper.updateDefaultByAid(lastModefied.getAid(),username,new Date());
+        }
+        if ( rows != 1){
+            throw new UpdateException("数据更新时候产生位置的异常");
+        }
+
+    }
+
     @Autowired
     private AddressMapper addressMapper;
 
@@ -102,5 +134,6 @@ public class AddressServiceImpl implements IAddressService {
         if(rows < 1){
             throw new UpdateException("数据更新时候产生位置的异常");
         }
+
     }
 }
