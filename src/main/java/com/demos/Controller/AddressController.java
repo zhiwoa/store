@@ -54,12 +54,13 @@ public class AddressController extends BaseController{
     @RequestMapping("queryOneAddress")
     public JsonResult<Address> queryOneAddress(Integer aid){
         Address address = addressService.queryAddressByAid(aid);
-//        //过滤部分不需要的字段
-        address.setModifiedTime(null);
-        address.setModifiedUser(null);
-        address.setCreatedTime(null);
-        address.setCreatedUser(null);
-        address.setIsDefault(0);
+////        //过滤部分不需要的字段
+//        address.setModifiedTime(null);
+//        address.setModifiedUser(null);
+//        address.setCreatedTime(null);
+//        address.setCreatedUser(null);
+//        address.setIsDefault(0);
+        System.out.println(address.toString());
         return new JsonResult<>(OK,address);
     }
 
