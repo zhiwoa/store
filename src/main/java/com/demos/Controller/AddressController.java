@@ -2,6 +2,7 @@ package com.demos.Controller;
 
 import com.demos.entity.Address;
 import com.demos.service.IAddressService;
+import com.demos.service.ex.InsertException;
 import com.demos.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,29 @@ public class AddressController extends BaseController{
        );
         return new JsonResult<>(OK);
     }
+    @RequestMapping("queryOneAddress")
+    public JsonResult<Address> queryOneAddress(Integer aid){
+        Address address = addressService.queryAddressByAid(aid);
+//        //过滤部分不需要的字段
+        address.setModifiedTime(null);
+        address.setModifiedUser(null);
+        address.setCreatedTime(null);
+        address.setCreatedUser(null);
+        address.setIsDefault(0);
+        return new JsonResult<>(OK,address);
+    }
 
+    @RequestMapping("updateAddress")
+    public JsonResult<Void> updateOneAddress(Address address,HttpSession session){
 
+        //取出session中用户名
+        String modifiedUser = getUsernameFromSession(session);
+
+        int result = addressService.updateOneAddress(address, modifiedUser);
+
+        if (result == 0){
+            throw new InsertException("修改地址时，服务器或数据库异常");
+        }
+        return new JsonResult<>(OK);
+    }
 }

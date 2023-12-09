@@ -14,6 +14,35 @@ import java.util.List;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
+
+
+    @Override
+    public int updateOneAddress(Address address, String modifiedUser) {
+        //对address对象中的数据进行补全：省市区
+        String ProvinceName = districtService.getNameByCode(address.getProvinceCode());
+        String CityName = districtService.getNameByCode(address.getCityCode());
+        String AreaName = districtService.getNameByCode(address.getAreaCode());
+        address.setProvinceName(ProvinceName);
+        address.setCityName(CityName);
+        address.setAreaName(AreaName);
+
+        //补全表单数据
+        address.setModifiedUser(modifiedUser);
+        address.setModifiedTime(new Date());
+        address.setCreatedTime(new Date());
+        address.setCreatedUser(modifiedUser);
+        int result = addressMapper.updateUserAddressByAid(address);
+        if( result !=1){
+            throw new InsertException("插入用户信息产生未知的异常");
+        }
+        return result;
+    }
+
+    @Override
+    public Address queryAddressByAid(Integer aid) {
+        return addressMapper.findByAid(aid);
+    }
+
     //删除收货信息
     @Override
     public void delete(Integer aid, Integer uid, String username) {
@@ -45,6 +74,7 @@ public class AddressServiceImpl implements IAddressService {
         }
 
     }
+
 
     @Autowired
     private AddressMapper addressMapper;

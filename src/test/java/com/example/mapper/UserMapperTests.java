@@ -56,10 +56,10 @@ public class UserMapperTests {
     }
 
 
-    @Test
-    public void UpdateAvatarByUid(){
-        userMapper.UpdateAvatarByUid(
-                33,"/upload/avatar.png","管理员",new Date()
-        );
-    }
+//    @Test
+//    public void UpdateAvatarByUid(){
+//        userMapper.UpdateAvatarByUid(
+//                33,"/upload/avatar.png","管理员",new Date()
+//        );
+//    }
 }

@@ -39,4 +39,14 @@ public class AddressServiceTest {
 //        测试包括：不是默认地址的也能正常删除，是默认地址的，删除之后把最近修改的一个作为新的默认地址
         addressService.delete(12,34,"23");
     }
+
+//    @Test
+//    public void update1(){
+//        Address address=new Address();
+//        address.setAid(15);
+//        address.setPhone("23568978");
+//        address.setName("什么啊");
+//        addressService.updateOneAddress(address,"guanliyuan");
+//    }
+
 }

@@ -68,5 +68,13 @@ public class AddressMapperTests {
         System.out.println(lastModefied.toString());
     }
 
-
+//    @Test
+//    public void updateUserAddressByAid(){
+//        Address address=new Address();
+//        address.setAid(15);
+//        address.setName("管理员");
+//        address.setPhone("13456");
+//        Integer i=addressMapper.updateUserAddressByAid(address);
+//        System.out.println(i);
+//    }
 }

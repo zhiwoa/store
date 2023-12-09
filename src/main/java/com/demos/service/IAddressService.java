@@ -7,7 +7,6 @@ import java.util.List;
 public interface IAddressService {
     void addNewAddress(Integer uid, String username, Address address);
 
-
     /**
      * 根据用户的id查询用户的收获信息
      * @param uid  用户的id
@@ -25,4 +24,10 @@ public interface IAddressService {
 
 //    删除收货信息
     void delete(Integer aid,Integer uid,String username);
+
+    //修改某个指定地址的抽象方法
+    int updateOneAddress(Address address,String modifiedUser);
+
+    //查询某条地址的抽象方法
+    Address queryAddressByAid(Integer aid);
 }

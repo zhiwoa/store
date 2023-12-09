@@ -266,7 +266,6 @@
 		<script type="text/javascript">
 			$("#btn-change-info").click(function (){
 				// 动态获取表单数据
-				// 发送ajax（）的异步请求来完成用户的注册功能
 				$.ajax({
 					url:"/users/change_info",
 					type:"POST",
@@ -290,6 +289,7 @@
 
 			// 检测到当前的页面被加载，就会出发ready方法
 $(document).ready(function (){
+	// console.log($("#form-change-info").serialize())
 // 动态获取表单数据
 	$.ajax({
 		url:"/users/get_by_uid",

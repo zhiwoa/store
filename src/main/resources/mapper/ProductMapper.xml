@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:用户指定当前映射文件和哪个接口进行映射，需要指定接口的文件路径，需要完整的路径名称-->
+<mapper namespace="com.demos.mapper.ProductMapper">
+    <resultMap id="ProductEntityMap" type="com.demos.entity.Product">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="item_type" property="itemType"/>
+        <result column="sell_point" property="sellPoint"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+
+    <select id="findHotList" resultMap="ProductEntityMap">
+        select * from t_product where status=1 order by priority desc limit 0,4
+    </select>
+
+</mapper>

@@ -66,4 +66,13 @@
         where uid=#{uid}
         order by modified_time desc limit 0,1
     </select>
+
+    <update id="updateUserAddressByAid">
+        update t_address set
+            name=#{name},province_name=#{provinceName},province_code=#{provinceCode},city_name=#{cityName},
+            city_code=#{cityCode},area_name=#{areaName},area_code=#{areaCode},zip=#{zip},address=#{address},phone=#{phone},
+            tel=#{tel},tag=#{tag},
+            created_user=#{createdUser},created_time=#{createdTime},modified_time = #{modifiedTime},modified_time=#{modifiedTime}
+        where aid=#{aid}
+    </update>
 </mapper>

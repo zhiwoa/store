@@ -68,4 +68,12 @@ public interface AddressMapper {
      * @return 收货地址数据
      */
     Address findLastModefied(Integer uid);
+
+
+    /**
+     * 根据用户aid 修改用户的地址信息
+     * @param address 用户的地址信息
+     * @return 受影响的行数
+     */
+    Integer updateUserAddressByAid(Address address);
 }
