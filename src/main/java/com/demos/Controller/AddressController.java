@@ -5,7 +5,6 @@ import com.demos.service.IAddressService;
 import com.demos.service.ex.InsertException;
 import com.demos.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

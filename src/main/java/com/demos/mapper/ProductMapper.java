@@ -12,4 +12,17 @@ public interface ProductMapper {
      * @return
      */
     List<Product> findHotList();
+
+    /**
+     * 根据商品的id查询商品详情
+     * @param id  商品的id
+     * @return 匹配的商品详情，如果没有匹配的数据则返回null
+     */
+    Product findById(Integer id);
+
+    /**
+     * 查询最近创建时间排后的 商品的前四个
+     * @return 商品
+     */
+    List<Product> findNewList();
 }

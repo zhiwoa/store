@@ -295,7 +295,44 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
+
+		<!--		截取id=？的js代码-->
 		<script type="text/javascript" src="../js/jquery-getUrlParam.js"></script>
+		<script type="text/javascript">
+			//调用jquery-getUrlParam.js文件的getUrlParam方法获取商品id
+			var id = $.getUrlParam("id");
+			console.log("id=" + id);
+			$(document).ready(function() {
+				$.ajax({
+					url: "/products/" + id + "/details",
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							console.log("title=" + json.data.title);
+							//html()方法:
+							// 假设有个标签<div id="a"></div>
+							//那么$("#a").html(<p></p>)就是给该div标签加p标签
+							//$("#a").html("我爱中国")就是给该div标签填充"我爱中国"内容
+							$("#product-title").html(json.data.title);
+							$("#product-sell-point").html(json.data.sellPoint);
+							$("#product-price").html(json.data.price);
+
+							for (var i = 1; i <= 5; i++) {
+								// 展示5张图片
+								$("#product-image-" + i + "-big").attr("src", ".." + json.data.image + i + "_big.png");
+								$("#product-image-" + i).attr("src", ".." + json.data.image + i + ".jpg");
+							}
+						} else if (json.state == 4006) { // 商品数据不存在的异常
+							location.href = "index.html";
+						} else {
+							alert("获取商品信息失败！" + json.message);
+						}
+					}
+				});
+			});
+		</script>
+
 	</body>
 
 </html>

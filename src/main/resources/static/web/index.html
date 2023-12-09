@@ -14,6 +14,7 @@
 		<script src="../bootstrap3/jquery-1.8.3.min.js"></script>
 		<script src="../bootstrap3/js/bootstrap.js"></script>
 		<script src="../js/menu.js" type="text/javascript" charset="utf-8"></script>
+
 		<!-- 字体图标 -->
 		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
 		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
@@ -151,7 +152,7 @@
 						<div class="panel-heading">
 							<p class="panel-title">新到好货</p>
 						</div>
-						<div class="panel-body panel-item">
+						<div id="newProduct" class="panel-body panel-item">
 							<div class="col-md-12">
 								<div class="col-md-7 text-row-2"><a href="product.html">齐心（COMIX）C5902 A5优品商务笔记本子记事本日记本122张</a></div>
 								<div class="col-md-2">¥18</div>
@@ -294,6 +295,7 @@
 	<script>
 		$(document).ready(function() {
 			showHotList();
+			showNewList();
 		});
 		function showHotList() {
 			$("#hot-list").empty();
@@ -306,6 +308,8 @@
 					for (var i = 0; i < list.length; i++) {
 						console.log(list[i].title);//调试用
 						var html = '<div class="col-md-12">'
+						// 关于a标签里面的href=“product.html?id=#{id}”
+// 这里是为了点击超链接进入商品详情页时可以把商品id传给详情页,使两个页面形成联系
 								+ '<div class="col-md-7 text-row-2"><a href="product.html?id=#{id}">#{title}</a></div>'
 								+ '<div class="col-md-2">¥#{price}</div>'
 								+ '<div class="col-md-3"><img src="..#{image}collect.png" class="img-responsive" /></div>'
@@ -321,6 +325,31 @@
 			});
 		}
 
+		function showNewList() {
+			$("#newProduct").empty();
+			$.ajax({
+				url: "/products/new_list",
+				type: "GET",
+				dataType: "JSON",
+				success: function (json) {
+					var list = json.data;
+					for (var i = 0; i < list.length; i++) {
+						console.log(list[i].title);//调试用
+						var html='<div class="col-md-12">' +
+								'<div class="col-md-7 text-row-2"><a href="product.html?id=#{id}">#{title}</a></div>' +
+								'<div class="col-md-2">¥#{price}</div>\n' +
+								'<div class="col-md-3"><img src="..#{image}collect.png" class="img-responsive" /></div>' +
+								'</div>'
+						html = html.replace(/#{id}/g, list[i].id);
+						html = html.replace(/#{title}/g, list[i].title);
+						html = html.replace(/#{price}/g, list[i].price);
+						html = html.replace(/#{image}/g, list[i].image);
+
+						$("#newProduct").append(html);
+					}
+				}
+			});
+		}
 	</script>
 	</body>
 
