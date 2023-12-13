@@ -34,4 +34,15 @@ public interface ICartService {
      * 返回值是Integer类型.这样的话就把数据库中更新后的数量层层传给前端,前端接收后填充到控件中就可以了8*/
     Integer addNum(Integer cid,Integer uid, String username);
 
+
+
+    /**
+     * 根据用户购物车数据的数量
+     * @param cid
+     * @param uid
+     * @param username
+     * @return  减少成功之后新的数量
+     */
+    Integer subNum(Integer cid,Integer uid, String username);
+
 }

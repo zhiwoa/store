@@ -96,4 +96,21 @@ public class CartServiceImpl implements ICartService {
         return num;
     }
 
+    @Override
+    public Integer subNum(Integer cid, Integer uid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("数据不存在");
+        }
+        if (!result.getUid().equals(uid)) {
+            throw new AccessDeniedException("数据非法访问");
+        }
+        Integer num = result.getNum() - 1;
+        Integer rows = cartMapper.updateNumByCid(cid, num, username, new Date());
+        if (rows != 1) {
+            throw new UpdateException("更新数据时产生未知异常");
+        }
+        return num;
+    }
+
 }

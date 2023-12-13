@@ -291,7 +291,7 @@
 									'<td>#{title}#{msg}</td>\n' +
 									'<td>¥<span id="goodsPrice#{cid}">#{singlePrice}</span></td>\n' +
 									'<td>\n' +
-									'<input id="price-#{cid}" type="button" value="-" class="num-btn" οnclick="reduceNum(1)" />\n' +
+									'<input id="price-#{cid}" type="button" value="-" class="num-btn" onclick="subNum(#{cid})" />\n' +
 									'<input id="goodsCount#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">\n' +
 									'<input id="price+#{cid}" class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />\n' +
 									'</td>\n' +
@@ -321,7 +321,7 @@
 			}
 
 			function addNum(cid) {
-				console.log(cid+"456")
+				// console.log(cid+"456")
 				$.ajax({
 					url: "/carts/"+cid+"/num/add",
 					type: "POST",
@@ -347,6 +347,37 @@
 					},
 					error: function (xhr) {
 						alert("增加购物车商品数量时产生未知的异常!"+xhr.message);
+					}
+				});
+			}
+
+			function subNum(cid) {
+				console.log(cid+"456到这里了")
+				$.ajax({
+					url: "/carts/"+cid+"/num/sub",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							$("#goodsCount"+cid).val(json.data);//字符串+整数cid后结果为字符串
+
+							//更新该商品总价
+							/*
+                                        html()方法:
+                                        不传参:是获取某个标签内部的内容(文本或标签)
+                                        传参:将参数放到标签里面替换掉该标签原有内容
+                                        * */
+							var price = $("#goodsPrice"+cid).html();
+							var totalPrice = price * json.data;
+
+							//将商品总价更新到控件中
+							$("#goodsCast"+cid).html(totalPrice);
+						} else {
+							alert("减少购物车商品数量失败"+json.message);
+						}
+					},
+					error: function (xhr) {
+						alert("减少购物车商品数量，时产生未知的异常!"+xhr.message);
 					}
 				});
 			}

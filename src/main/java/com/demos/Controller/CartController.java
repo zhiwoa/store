@@ -40,7 +40,7 @@ public class CartController extends BaseController {
     //更新（增加）购物车某一商品的数量和价格
     @RequestMapping("{cid}/num/add")
     public JsonResult<Integer> addNum(@PathVariable("cid") Integer cid, HttpSession session) {
-        System.out.println(cid+"46456465465456456");
+//        System.out.println(cid+"46456465465456456");
         Integer data = cartService.addNum(
                 cid,
                 getUidFromSession(session),
@@ -48,5 +48,14 @@ public class CartController extends BaseController {
         return new JsonResult<Integer>(OK, data);
     }
 
+    //更新（减少）购物车某一商品的数量和价格
+    @RequestMapping("{cid}/num/sub")
+    public JsonResult<Integer> subNum(@PathVariable("cid") Integer cid, HttpSession session) {
+        Integer data = cartService.subNum(
+                cid,
+                getUidFromSession(session),
+                getUsernameFromSession(session));
+        return new JsonResult<Integer>(OK, data);
+    }
 
 }
