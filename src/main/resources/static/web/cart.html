@@ -20,7 +20,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/top.css" />
 		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="../css/cart.css" />
-		<script src="../js/cart.js" type="text/javascript" charset="utf-8"></script>
+<!--		<script src="../js/cart.js" type="text/javascript" charset="utf-8"></script>-->
 	</head>
 
 	<body>
@@ -174,7 +174,7 @@
 							</div>
 							<div>
 								<span class="pull-right">
-								<input type="submit" value="  结  算  " class="btn btn-primary btn-lg link-account" />
+								<input type="button" value="  结  算  " class="btn btn-primary btn-lg link-account" />
 							</span>
 							</div>
 						</form>
@@ -268,13 +268,93 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
-			$(function() {
-				//返回链接
-				$(".link-account").click(function() {
-					location.href = "orderConfirm.html";
-				})
-			})
+			$(document).ready(function() {
+				showCartList();
+			});
+
+			//展示购物车列表数据
+			function showCartList() {
+
+				$("#cart-list").empty();
+				$.ajax({
+					url: "/carts",
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						var list = json.data;
+						for (var i = 0; i < list.length; i++) {
+							var tr = '<tr>\n' +
+									'<td>\n' +
+									'<input name="cids" value="#{cid}" type="checkbox" class="ckitem" />\n' +
+									'</td>\n' +
+									'<td><img src="..#{image}collect.png" class="img-responsive" /></td>\n' +
+									'<td>#{title}#{msg}</td>\n' +
+									'<td>¥<span id="goodsPrice#{cid}">#{singlePrice}</span></td>\n' +
+									'<td>\n' +
+									'<input id="price-#{cid}" type="button" value="-" class="num-btn" οnclick="reduceNum(1)" />\n' +
+									'<input id="goodsCount#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">\n' +
+									'<input id="price+#{cid}" class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />\n' +
+									'</td>\n' +
+									'<td><span id="goodsCast#{cid}">#{totalPrice}</span></td>\n' +
+									'<td>\n' +
+									'<input type="button" οnclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
+									'</td>\n' +
+									'</tr>';
+							tr = tr.replaceAll(/#{cid}/g, list[i].cid);
+							tr = tr.replaceAll(/#{image}/g, list[i].image);
+							tr = tr.replaceAll(/#{title}/g, list[i].title);
+							tr = tr.replaceAll(/#{singlePrice}/g, list[i].realPrice);
+							tr = tr.replaceAll(/#{num}/g, list[i].num);
+							tr = tr.replaceAll(/#{totalPrice}/g, list[i].realPrice * list[i].num);
+							if (list[i].realPrice < list[i].price) {
+								tr = tr.replace(/#{msg}/g, "比加入时降价" + (list[i].price - list[i].realPrice) + "元");
+							} else {
+								tr = tr.replace(/#{msg}/g, "");
+							}
+							$("#cart-list").append(tr);
+						}
+					},
+					error: function (xhr) {
+						alert("加载购物车列表数据时产生未知的异常"+xhr.status);
+					}
+				});
+			}
+
+			function addNum(cid) {
+				console.log(cid+"456")
+				$.ajax({
+					url: "/carts/"+cid+"/num/add",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							$("#goodsCount"+cid).val(json.data);//字符串+整数cid后结果为字符串
+
+							//更新该商品总价
+							/*
+                                        html()方法:
+                                        不传参:是获取某个标签内部的内容(文本或标签)
+                                        传参:将参数放到标签里面替换掉该标签原有内容
+                                        * */
+							var price = $("#goodsPrice"+cid).html();
+							var totalPrice = price * json.data;
+
+							//将商品总价更新到控件中
+							$("#goodsCast"+cid).html(totalPrice);
+						} else {
+							alert("增加购物车商品数量失败"+json.message);
+						}
+					},
+					error: function (xhr) {
+						alert("增加购物车商品数量时产生未知的异常!"+xhr.message);
+					}
+				});
+			}
+
+
 		</script>
+
+
 	</body>
 
 </html>

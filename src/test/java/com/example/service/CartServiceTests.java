@@ -15,4 +15,11 @@ public class CartServiceTests {
     public void addToCart() {
         cartService.addToCart(11, 10000002, 3, "Tom");
     }
+
+
+    @Test
+    public void addNum() {
+        Integer integer = cartService.addNum(1,11,"123");
+        System.out.println(integer);
+    }
 }

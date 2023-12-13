@@ -5,11 +5,16 @@ import com.demos.entity.Product;
 import com.demos.mapper.CartMapper;
 import com.demos.mapper.ProductMapper;
 import com.demos.service.ICartService;
+import com.demos.service.ex.AccessDeniedException;
+import com.demos.service.ex.CartNotFoundException;
 import com.demos.service.ex.InsertException;
+import com.demos.service.ex.UpdateException;
+import com.demos.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements ICartService {
@@ -19,6 +24,7 @@ public class CartServiceImpl implements ICartService {
     private ProductMapper productMapper;//获取price时候用的
 
 
+    //加入购物车
     @Override
     public void addToCart(Integer uid, Integer pid, Integer amount, String username) {
         //根据参数pid 和uid 查询购物车中该商品是否存在
@@ -65,4 +71,29 @@ public class CartServiceImpl implements ICartService {
 
 
     }
+
+    //展示购物车
+    @Override
+    public List<CartVO> getBoByUid(Integer uid) {
+        return cartMapper.findVoByUid(uid);
+    }
+
+    //增加购物车数量
+    @Override
+    public Integer addNum(Integer cid, Integer uid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("数据不存在");
+        }
+        if (!result.getUid().equals(uid)) {
+            throw new AccessDeniedException("数据非法访问");
+        }
+        Integer num = result.getNum() + 1;
+        Integer rows = cartMapper.updateNumByCid(cid, num, username, new Date());
+        if (rows != 1) {
+            throw new UpdateException("更新数据时产生未知异常");
+        }
+        return num;
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.demos.mapper;
 
 import com.demos.entity.Cart;
+import com.demos.vo.CartVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 //购物车的Mapper接口
 public interface CartMapper {
@@ -37,6 +39,22 @@ public interface CartMapper {
     Cart findByUidAndPid(
             @Param("uid") Integer uid,
             @Param("pid") Integer pid);
+
+
+    /**
+     * 查询某用户的购物车数据
+     * @param uid 用户的id
+     * @return 用户的购物车数据列表
+     */
+    List<CartVO>findVoByUid(Integer uid);
+
+
+    /**
+     * 根据商品cid查询商品
+     * @param cid 商品的id
+     * @return 购物车的数据列表
+     */
+    Cart findByCid(Integer cid);
 
 
 }
