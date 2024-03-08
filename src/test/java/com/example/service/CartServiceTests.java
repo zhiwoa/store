@@ -22,4 +22,9 @@ public class CartServiceTests {
         Integer integer = cartService.addNum(1,11,"123");
         System.out.println(integer);
     }
+
+    @Test
+    public void de(){
+       cartService.deleteBycidS(6);
+    }
 }

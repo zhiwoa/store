@@ -56,4 +56,8 @@ public interface CartMapper {
      */
     Cart findByCid(Integer cid);
 
+//    删除商品
+    Integer deleteByCid(Integer cid);
+
+    Integer countBycid(Integer cid);
 }

@@ -53,5 +53,10 @@
         select * from t_cart where cid=#{cid}
     </select>
 
-
+    <delete id="deleteByCid">
+        delete from t_cart where cid=#{cid}
+    </delete>
+    <select id="countBycid" resultType="java.lang.Integer">
+        select count(*) from t_cart where cid=#{cid}
+    </select>
 </mapper>

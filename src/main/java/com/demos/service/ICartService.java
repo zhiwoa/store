@@ -45,4 +45,9 @@ public interface ICartService {
      */
     Integer subNum(Integer cid,Integer uid, String username);
 
+
+//    删除
+    void deleteBycidS(Integer cid);
+
+
 }

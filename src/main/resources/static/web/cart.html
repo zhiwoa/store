@@ -297,7 +297,8 @@
 									'</td>\n' +
 									'<td><span id="goodsCast#{cid}">#{totalPrice}</span></td>\n' +
 									'<td>\n' +
-									'<input type="button" οnclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
+									// '<input type="button" οnclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
+									'<input  onclick="deletebycid(#{cid})" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
 									'</td>\n' +
 									'</tr>';
 							tr = tr.replaceAll(/#{cid}/g, list[i].cid);
@@ -378,6 +379,28 @@
 					},
 					error: function (xhr) {
 						alert("减少购物车商品数量，时产生未知的异常!"+xhr.message);
+					}
+				});
+			}
+
+			//删除信息
+			function deletebycid(cid){
+				// 发送ajax（）的异步请求来完成用户的注册功能
+				$.ajax({
+					url:"/carts/"+cid+"/delete",
+					type:"POST",
+					dataType:"JSON",
+					success:function (json){
+						if(json.state == 200){
+							// 重新加载收货地址列表页面
+							// showAddressList();
+							location.href="cart.html";
+						}else{
+							alert("删除失败");
+						}
+					},
+					error:function (xhr){
+						alert("删除购物车时候产生未知的错误！"+xhr.status);
 					}
 				});
 			}

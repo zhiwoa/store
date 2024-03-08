@@ -5,10 +5,7 @@ import com.demos.entity.Product;
 import com.demos.mapper.CartMapper;
 import com.demos.mapper.ProductMapper;
 import com.demos.service.ICartService;
-import com.demos.service.ex.AccessDeniedException;
-import com.demos.service.ex.CartNotFoundException;
-import com.demos.service.ex.InsertException;
-import com.demos.service.ex.UpdateException;
+import com.demos.service.ex.*;
 import com.demos.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -113,4 +110,26 @@ public class CartServiceImpl implements ICartService {
         return num;
     }
 
+    @Override
+    public void deleteBycidS(Integer cid) {
+
+        Cart result = cartMapper.findByCid(cid);
+        if(result == null){
+            throw new CartNotFoundException("找不到商品");
+        }
+
+        //检测当前获取到的收货地址是数据归属
+        if(!result.getCid().equals(cid)){
+            throw new AccessDeniedException("非法访问");
+        }
+
+        Integer row = cartMapper.deleteByCid(cid);
+        if(row != 1){
+            throw new DeleteException("删除时候产生未知的异常");
+        }
+        Integer count = cartMapper.countBycid(cid);
+        if(count == 0){
+            return;
+        }
+    }
 }

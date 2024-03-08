@@ -47,5 +47,8 @@ public class CartMapperTests {
         System.out.println(cartMapper.findByCid(1));
     }
 
-
+    @Test
+    public void deleteBycid(){
+        cartMapper.deleteByCid(7);
+    }
 }
