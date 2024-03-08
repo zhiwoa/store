@@ -102,7 +102,7 @@
 								<thead>
 									<tr>
 										<th width="8%">
-											<input type="checkbox" class="ckall" onclick="checkall(this)" />全选</th>
+<!--											<input type="checkbox" class="ckall" onclick="checkall(this)" />全选</th>-->
 										<th width="110"></th>
 										<th width="29%">商品</th>
 										<th width="11%">单价</th>
@@ -165,13 +165,13 @@
 									</tr>
 								</tbody>
 							</table>
-							<div class="total-bar">
-								<a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">删除所选商品</a>
-								<span class="pull-right">已选商品
-								<span id="selectCount">0</span>件 总价¥
-								<span id="selectTotal">0</span>元
-								</span>
-							</div>
+<!--							<div class="total-bar">-->
+<!--								<a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">删除所选商品</a>-->
+<!--								<span class="pull-right">已选商品-->
+<!--								<span id="selectCount">0</span>件 总价¥-->
+<!--								<span id="selectTotal">0</span>元-->
+<!--								</span>-->
+<!--							</div>-->
 							<div>
 								<span class="pull-right">
 								<input type="button" value="  结  算  " class="btn btn-primary btn-lg link-account" />
@@ -271,7 +271,7 @@
 			$(document).ready(function() {
 				showCartList();
 			});
-
+			var cids=[];
 			//展示购物车列表数据
 			function showCartList() {
 
@@ -285,7 +285,7 @@
 						for (var i = 0; i < list.length; i++) {
 							var tr = '<tr>\n' +
 									'<td>\n' +
-									'<input name="cids" value="#{cid}" type="checkbox" class="ckitem" />\n' +
+									'<input name="#{cid}" value="#{cid}" type="checkbox" class="ckitem" />\n' +
 									'</td>\n' +
 									'<td><img src="..#{image}collect.png" class="img-responsive" /></td>\n' +
 									'<td>#{title}#{msg}</td>\n' +
@@ -383,6 +383,7 @@
 				});
 			}
 
+
 			//删除信息
 			function deletebycid(cid){
 				// 发送ajax（）的异步请求来完成用户的注册功能
@@ -404,6 +405,8 @@
 					}
 				});
 			}
+			//批量删除信息
+
 
 
 		</script>

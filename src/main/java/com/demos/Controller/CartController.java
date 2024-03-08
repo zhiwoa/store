@@ -63,4 +63,9 @@ public class CartController extends BaseController {
         cartService.deleteBycidS(cid);
         return new JsonResult<>(OK);
     }
+    @RequestMapping("{cid}/deleteS")
+    public JsonResult<Void> deleteS(Integer[] cids){
+        cartService.deleteBycidAdd(cids);
+        return new JsonResult<>(OK);
+    }
 }

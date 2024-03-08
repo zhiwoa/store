@@ -132,4 +132,26 @@ public class CartServiceImpl implements ICartService {
             return;
         }
     }
+
+    @Override
+    public void deleteBycidAdd(Integer[] cids) {
+
+        for(int i=0;i<cids.length;i++){
+            int cid = cids[i];
+            Cart result = cartMapper.findByCid(cid);
+            if(result == null){
+                throw new CartNotFoundException("找不到商品");
+            }
+
+            //检测当前获取到的收货地址是数据归属
+            if(!result.getCid().equals(cid)){
+                throw new AccessDeniedException("非法访问");
+            }
+        }
+
+        Integer row = cartMapper.delByCidS(cids);
+        if(row < 1) {
+            throw new DeleteException("删除时候产生未知的异常");
+        }
+    }
 }

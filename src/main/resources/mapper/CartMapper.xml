@@ -56,6 +56,18 @@
     <delete id="deleteByCid">
         delete from t_cart where cid=#{cid}
     </delete>
+
+<!--    collection:要遍历的集合或者数组-->
+<!--    item:能够取到集合或数组中的每一个元素-->
+<!--    open；从什么开始-->
+<!--    close:从什么结束-->
+    <delete id="delByCidS">
+        delete from t_cart where cid= in
+        <foreach collection="cids" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
     <select id="countBycid" resultType="java.lang.Integer">
         select count(*) from t_cart where cid=#{cid}
     </select>

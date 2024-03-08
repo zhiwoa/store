@@ -60,4 +60,7 @@ public interface CartMapper {
     Integer deleteByCid(Integer cid);
 
     Integer countBycid(Integer cid);
+
+    //批量删除
+    Integer delByCidS(Integer[] cids);
 }

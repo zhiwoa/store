@@ -49,5 +49,6 @@ public interface ICartService {
 //    删除
     void deleteBycidS(Integer cid);
 
-
+//多个删除
+     void deleteBycidAdd(Integer[] cids);
 }

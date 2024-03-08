@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -51,4 +53,12 @@ public class CartMapperTests {
     public void deleteBycid(){
         cartMapper.deleteByCid(7);
     }
+
+//    @Test
+//    public void deleteBycidS(){
+//        List<Integer>cids=new ArrayList<>();
+//        cids.add(1);
+//        cids.add(2);
+//        cartMapper.delByCidS(cids);
+//    }
 }
