@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -134,7 +135,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void deleteBycidAdd(Integer[] cids) {
+    public void deleteBycidAll(Integer[] cids) {
 
         for(int i=0;i<cids.length;i++){
             int cid = cids[i];
@@ -153,5 +154,34 @@ public class CartServiceImpl implements ICartService {
         if(row < 1) {
             throw new DeleteException("删除时候产生未知的异常");
         }
+    }
+
+    /**
+     * 在另一个页面展示购物车勾选的信息
+     *
+     * @param cids 商品的id
+     * @return 返回勾选的商品的信息
+     */
+    @Override
+    public List<CartVO> getBoBycids(Integer []cids,Integer uid) {
+        for (Integer a: cids) {
+            System.out.print(a+" ");
+        }
+        List<CartVO> list = cartMapper.findVoByCids(cids);
+//        for(int i=0;i<list.size();i++){
+//            CartVO cartVO=list.get(i);
+//            //当前数据不属于当前用户
+//            if(!cartVO.getUid().equals(uid)){
+//                list.remove(cartVO);//从集合中删除这个元素
+//            }
+//        }
+        Iterator<CartVO> iterator = list.iterator();
+        while(iterator.hasNext()){
+            CartVO cartVO=iterator.next();
+            if(!cartVO.getUid().equals(uid)){
+                list.remove(cartVO);
+            }
+        }
+        return list;
     }
 }

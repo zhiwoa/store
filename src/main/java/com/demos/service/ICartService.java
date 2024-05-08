@@ -50,5 +50,13 @@ public interface ICartService {
     void deleteBycidS(Integer cid);
 
 //多个删除
-     void deleteBycidAdd(Integer[] cids);
+     void deleteBycidAll(Integer[] cids);
+
+
+    /**
+     * 在另一个页面展示购物车勾选的信息
+     * @param cids 商品的id
+     * @return 返回勾选的商品的信息
+     */
+    List<CartVO>getBoBycids(Integer[] cids,Integer uid);
 }

@@ -61,4 +61,11 @@ public class CartMapperTests {
 //        cids.add(2);
 //        cartMapper.delByCidS(cids);
 //    }
+
+    @Test
+    public void findVoByCid(){
+        Integer []cids={1,2,5,6};
+        System.out.println(cartMapper.findVoByCids(cids));
+    }
+
 }

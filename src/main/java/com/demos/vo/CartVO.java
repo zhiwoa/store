@@ -98,19 +98,36 @@ public class CartVO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CartVO)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CartVO)) {
+            return false;
+        }
 
         CartVO cartVO = (CartVO) o;
 
-        if (getCid() != null ? !getCid().equals(cartVO.getCid()) : cartVO.getCid() != null) return false;
-        if (getUid() != null ? !getUid().equals(cartVO.getUid()) : cartVO.getUid() != null) return false;
-        if (getPid() != null ? !getPid().equals(cartVO.getPid()) : cartVO.getPid() != null) return false;
-        if (getPrice() != null ? !getPrice().equals(cartVO.getPrice()) : cartVO.getPrice() != null) return false;
-        if (getNum() != null ? !getNum().equals(cartVO.getNum()) : cartVO.getNum() != null) return false;
-        if (getTitle() != null ? !getTitle().equals(cartVO.getTitle()) : cartVO.getTitle() != null) return false;
-        if (getRealPrice() != null ? !getRealPrice().equals(cartVO.getRealPrice()) : cartVO.getRealPrice() != null)
+        if (getCid() != null ? !getCid().equals(cartVO.getCid()) : cartVO.getCid() != null) {
             return false;
+        }
+        if (getUid() != null ? !getUid().equals(cartVO.getUid()) : cartVO.getUid() != null) {
+            return false;
+        }
+        if (getPid() != null ? !getPid().equals(cartVO.getPid()) : cartVO.getPid() != null) {
+            return false;
+        }
+        if (getPrice() != null ? !getPrice().equals(cartVO.getPrice()) : cartVO.getPrice() != null) {
+            return false;
+        }
+        if (getNum() != null ? !getNum().equals(cartVO.getNum()) : cartVO.getNum() != null) {
+            return false;
+        }
+        if (getTitle() != null ? !getTitle().equals(cartVO.getTitle()) : cartVO.getTitle() != null) {
+            return false;
+        }
+        if (getRealPrice() != null ? !getRealPrice().equals(cartVO.getRealPrice()) : cartVO.getRealPrice() != null) {
+            return false;
+        }
         return getImage() != null ? getImage().equals(cartVO.getImage()) : cartVO.getImage() == null;
     }
 

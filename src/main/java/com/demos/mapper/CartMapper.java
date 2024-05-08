@@ -63,4 +63,11 @@ public interface CartMapper {
 
     //批量删除
     Integer delByCidS(Integer[] cids);
+
+    /**
+     * 在另一个页面展示购物车勾选的信息
+     * @param cids
+     * @return
+     */
+    List<CartVO>findVoByCids(Integer[] cids);
 }

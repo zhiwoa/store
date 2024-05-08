@@ -1,6 +1,6 @@
 package com.demos.Controller;
 
-import com.demos.entity.BaseEntity;
+
 import com.demos.service.ICartService;
 import com.demos.utils.JsonResult;
 import com.demos.vo.CartVO;
@@ -65,7 +65,17 @@ public class CartController extends BaseController {
     }
     @RequestMapping("{cid}/deleteS")
     public JsonResult<Void> deleteS(Integer[] cids){
-        cartService.deleteBycidAdd(cids);
+        cartService.deleteBycidAll(cids);
         return new JsonResult<>(OK);
     }
+
+
+    @RequestMapping("list")
+    public JsonResult<List<CartVO>> getVoBycids(Integer[] cids, HttpSession session){
+        List<CartVO> data =
+                cartService.getBoBycids(cids, getUidFromSession(session));
+        return new JsonResult<>(OK,data);
+    }
+
+
 }
