@@ -30,4 +30,11 @@ public interface IAddressService {
 
     //查询某条地址的抽象方法
     Address queryAddressByAid(Integer aid);
+
+    /**
+     * 根据地址id获取收货地址数据
+     * @param aid
+     * @return
+     */
+    Address getByAid(Integer aid,Integer uid);
 }

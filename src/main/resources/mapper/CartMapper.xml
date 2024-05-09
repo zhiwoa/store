@@ -61,11 +61,13 @@
 <!--    item:能够取到集合或数组中的每一个元素-->
 <!--    open；从什么开始-->
 <!--    close:从什么结束-->
-    <delete id="delByCidS">
-        delete from t_cart where cid= in
-        <foreach collection="cids" item="cid" open="(" close=")" separator=",">
-            #{cid}
+    <delete id="delByCidAll">
+        delete from t_cart where cid  IN (
+        <foreach collection="array" item="cid" separator=",">
+        #{cid}
         </foreach>
+        )
+
     </delete>
 
     <select id="countBycid" resultType="java.lang.Integer">

@@ -43,6 +43,30 @@ public class AddressServiceImpl implements IAddressService {
         return addressMapper.findByAid(aid);
     }
 
+    /**
+     * 根据地址id获取收货地址数据
+     * @param aid
+     * @return
+     */
+    @Override
+    public Address getByAid(Integer aid,Integer uid) {
+        Address address = addressMapper.findByAid(aid);
+        if(address == null){
+            throw new AddressNotFoundException("收货地址不存在");
+        }
+        if(!address.getUid().equals(uid)){
+            throw new AccessDeniedException("非法访问数据");
+        }
+        address.setProvinceCode(null);
+        address.setCityCode(null);
+        address.setAreaCode(null);
+        address.setCreatedUser(null);
+        address.setCreatedTime(null);
+        address.setModifiedTime(null);
+        address.setModifiedUser(null);
+        return address;
+    }
+
     //删除收货信息
     @Override
     public void delete(Integer aid, Integer uid, String username) {

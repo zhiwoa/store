@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 	<head>
 		<meta charset="UTF-8">
@@ -167,9 +167,11 @@
 							</table>
 							<div class="total-bar">
 								<a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">删除所选商品</a>
+<!--								<input onclick="deletebycidALL(#{cid})" class="cart-del-sel btn btn-default btn-xs" value="删除所选商品"  />-->
+
 								<span class="pull-right">已选商品
-								<span id="selectCount">0</span>件 总价¥
-								<span id="selectTotal">0</span>元
+								<span id="select-Count">0</span>件 总价¥
+								<span id="select-Total">0</span>元
 								</span>
 							</div>
 							<div>
@@ -275,14 +277,15 @@
 			// var cids=[];
 			//展示购物车列表数据
 			function showCartList() {
-
 				$("#cart-list").empty();
 				$.ajax({
 					url: "/carts",
 					type: "GET",
 					dataType: "JSON",
 					success: function(json) {
-
+						let selectCount=0;
+						let selectTotal=0;
+						// var cids=[];
 						var list = json.data;
 						for (var i = 0; i < list.length; i++) {
 							var tr = '<tr>\n' +
@@ -304,8 +307,6 @@
 									'</td>\n' +
 									'</tr>';
 
-
-
 							tr = tr.replaceAll(/#{cid}/g, list[i].cid);
 							tr = tr.replaceAll(/#{image}/g, list[i].image);
 							tr = tr.replaceAll(/#{title}/g, list[i].title);
@@ -318,7 +319,14 @@
 								tr = tr.replace(/#{msg}/g, "");
 							}
 							$("#cart-list").append(tr);
+							selectCount+=list[i].num;
+							selectTotal+=list[i].price * list[i].num;
 						}
+						console.log(cids)
+						//更新支付页面的总条数和总价格
+						$("#select-Count").html(selectCount);
+						// console.log(selectCount,selectTotal)
+						$("#select-Total").html(selectTotal);
 					},
 					error: function (xhr) {
 						alert("加载购物车列表数据时产生未知的异常"+xhr.status);
@@ -358,7 +366,7 @@
 			}
 
 			function subNum(cid) {
-				console.log(cid+"456到这里了")
+				// console.log(cid+"456到这里了")
 				$.ajax({
 					url: "/carts/"+cid+"/num/sub",
 					type: "POST",
@@ -410,11 +418,11 @@
 					}
 				});
 			}
-			// //批量删除信息
-			// function deletebycidALL(cids){
+			//批量删除信息
+			// function deletebycidALL(cid){
 			// 	// 发送ajax（）的异步请求来完成用户的注册功能
 			// 	$.ajax({
-			// 		url:"/carts/"+cids+"/deleteS",
+			// 		url:"/carts/"+cid+"/deleteS",
 			// 		type:"POST",
 			// 		dataType:"JSON",
 			// 		success:function (json){

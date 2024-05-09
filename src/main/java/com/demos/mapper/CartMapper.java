@@ -61,8 +61,9 @@ public interface CartMapper {
 
     Integer countBycid(Integer cid);
 
+
     //批量删除
-    Integer delByCidS(Integer[] cids);
+    Integer delByCidAll(Integer[] cids);
 
     /**
      * 在另一个页面展示购物车勾选的信息

@@ -157,7 +157,9 @@
 						</div>
 						<div class="pay-bar">
 							<a href="cart.html">返回购物车</a>
-							<span class="pull-right"><input id="btn-create-order" type="button" value="在线支付" class="btn btn-primary btn-lg link-pay"/></span>
+							<span class="pull-right">
+								<input id="btn-create-order" type="button" value="在线支付" class="btn btn-primary btn-lg link-pay"/>
+							</span>
 						</div>
 					</form>
 				</div>
@@ -253,10 +255,34 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				showCartList();
+				showAddressList();
+			});
+
+			$("#btn-create-order").click(function() {
+				var aid = $("#address-list").val();//12
+				var cids = location.search.substr(1);//cids=4&cids=6&cids=8
+				console.log("cids:"+cids)
+				console.log("aid:"+aid)
+				$.ajax({
+					url: "/order/create",
+					data: "aid=" + aid + "&" + cids,//aid=12&cids=4&cids=6&cids=8
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							location.href="payment.html";
+							alert("订单支付成功");
+							console.log(json.data);
+						}
+					},
+					error: function(xhr) {
+						alert("创建订单数据时产生未知的异常" + xhr.status);
+					}
+				});
 			});
 			//展示购物车列表数据
 			function showCartList() {
-				console.log(location.search.substr(1))
+				// console.log(location.search.substr(1))
 				$("#cart-list").empty();
 				$.ajax({
 					url: "/carts/list",
@@ -280,13 +306,13 @@
 								//利用正则表达式替换
 
 								tr = tr.replace(/#{image}/g,list[i].image);
-								console.log(list[i].image)
+								// console.log(list[i].image)
 								tr =tr.replace(/#{title}/g,list[i].title);
-								console.log(list[i].title)
+								// console.log(list[i].title)
 								tr =tr.replace(/#{price}/g,list[i].price);
-								console.log(list[i].price)
+								// console.log(list[i].price)
 								tr =tr.replace(/#{num}/g,list[i].num);
-								console.log(list[i].num)
+								// console.log(list[i].num)
 								tr =tr.replace(/#{totalPrice}/g,list[i].price* list[i].num);
 
 								//追加数据
@@ -295,12 +321,44 @@
 								allPrice+=list[i].price * list[i].num;
 							}
 							//更新支付页面的总条数和总价格
-							$("all-count").html(allCount);
-							$("all-price").html(allPrice);
+							$("#all-count").html(allCount);
+							$("#all-price").html(allPrice);
 						}
 					},
 					error:function (xhr){
 						alert("购物车加载列表数据产生未知的异常， "+xhr.status);
+					}
+				});
+			}
+
+
+			function showAddressList() {
+				$("#address-list").empty();
+				$.ajax({
+					url: "/addresses",
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						if(json.state == 200){
+							let list = json.data;
+							for (let i = 0; i < list.length; i++) {
+								let opt="<option value='#{aid}'>#{name}&nbsp;&nbsp;&nbsp;" +
+										"#{tag}&nbsp;&nbsp;&nbsp;&nbsp;#{provinceName}#{cityName}#{areaName}#{address}&nbsp;&nbsp;#{phone}</option>\n";
+								opt=opt.replace(/#{aid}/g,list[i].aid);
+								opt=opt.replace(/#{name}/g,list[i].name);
+								opt=opt.replace(/#{tag}/g,list[i].tag);
+								opt=opt.replace(/#{provinceName}/g,list[i].provinceName);
+								opt=opt.replace(/#{cityName}/g,list[i].cityName);
+								opt=opt.replace(/#{areaName}/g,list[i].areaName);
+								opt=opt.replace(/#{address}/g,list[i].address);
+								opt=opt.replace(/#{phone}/g,list[i].phone);
+
+								$("#address-list").append(opt);
+							}
+						}
+					},
+					error:function (xhr){
+						alert("购物车收获地址列表数据加载产生未知的异常， "+xhr.status);
 					}
 				});
 			}
