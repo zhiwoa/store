@@ -5,6 +5,7 @@ import com.demos.entity.Order;
 import com.demos.entity.OrderItem;
 import com.demos.mapper.AddressMapper;
 import com.demos.mapper.OrderMapper;
+import com.demos.vo.OrderVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,5 +38,11 @@ public class OrderMapperTests {
         order.setTitle("ahjsdkhaskjdh");
         orderMapper.insertOrderItem(order);
 
+    }
+
+    @Test
+    public void findall(){
+        List<OrderVO> orderByUid = orderMapper.findOrderByUid(34);
+        System.out.println(orderByUid);
     }
 }

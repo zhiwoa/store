@@ -26,4 +26,15 @@
             #{createdTime}, #{modifiedUser}, #{modifiedTime}
         )
     </insert>
+
+    <select id="findOrderByUid" resultType="com.demos.vo.OrderVO">
+        select
+            id,recv_name as recvName,t_order_item.oid,pid,title,image,price,num,status,order_time as orderTime
+        FROM t_order_item
+                 LEFT JOIN t_order ON t_order.oid = t_order_item.oid
+        where
+            uid = #{uid}
+        ORDER BY t_order.order_time DESC
+
+    </select>
 </mapper>

@@ -131,8 +131,18 @@
 			<div class="col-md-10">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<p class="panel-title">
-							订单号：1101000001，下单时间：2018-12-1 17:50:30 ，收货人：八戒
+<!--						<p class="panel-title" id="dingdanhao">-->
+<!--							订单号：1101000001，下单时间：2018-12-1 17:50:30 ，收货人：八戒-->
+<!--						</p>-->
+
+						订单号:<p class="panel-title" id="ids" style="color: #2aabd2">
+							1101000001
+						</p>
+						下单时间：<p class="panel-title" id="time" style="color: #2aabd2">
+							2018-12-1 17:50:30
+						</p>
+						收货人:<p class="panel-title" id="username" style="color: #2aabd2">
+							八戒
 						</p>
 					</div>
 					<div class="panel-body">
@@ -149,7 +159,7 @@
 									<th width="10%">操作</th>
 								</tr>
 							</thead>
-							<tbody class="orders-body">
+							<tbody id="orders" class="orders-body">
 								<tr>
 									<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>
 									<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
@@ -182,7 +192,7 @@
 									<td>¥<span>5999</span></td>
 									<td>1件</td>
 									<td>¥<span>5999</span></td>
-									<td><a href="#">申请售后</a></td>
+									<td><a href="#" id="status">申请售后</a></td>
 									<td>
 										<div>已发货</div>
 										<div><a href="orderInfo.html">订单详情</a></div>
@@ -192,51 +202,52 @@
 							</tbody>
 						</table>
 						<div>
-							<span class="pull-right">订单总金额：¥20689</span>
+							<span>订单总金额：¥</span>
+							<span id ="selsect-Tatals" >20689</span>
 						</div>
 					</div>
 				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<p class="panel-title">
-							订单号：1101000301，下单时间：2018-12-2 20:32:17 ， 收货人：八戒
-						</p>
-					</div>
-					<div class="panel-body">
-						<table class="orders-table" width="100%">
-							<thead>
-								<tr>
-									<th width="15%"></th>
-									<th width="30%">商品</th>
-									<th width="8%">单价</th>
-									<th width="8%">数量</th>
-									<th width="9%">小计</th>
-									<th width="10%">售后</th>
-									<th width="10%">状态</th>
-									<th width="10%">操作</th>
-								</tr>
-							</thead>
-							<tbody class="orders-body">
-								<tr>
-									<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>
-									<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
-									<td>¥<span>5298</span></td>
-									<td>1件</td>
-									<td>¥<span>5298</span></td>
-									<td><a href="#">申请售后</a></td>
-									<td>
-										<div>已发货</div>
-										<div><a href="orderInfo.html">订单详情</a></div>
-									</td>
-									<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<div>
-							<span class="pull-right">订单总金额：¥5298</span>
-						</div>
-					</div>
-				</div>
+<!--				<div class="panel panel-default">-->
+<!--					<div class="panel-heading">-->
+<!--						<p class="panel-title">-->
+<!--							订单号：1101000301，下单时间：2018-12-2 20:32:17 ， 收货人：八戒-->
+<!--						</p>-->
+<!--					</div>-->
+<!--					<div class="panel-body">-->
+<!--						<table class="orders-table" width="100%">-->
+<!--							<thead>-->
+<!--								<tr>-->
+<!--									<th width="15%"></th>-->
+<!--									<th width="30%">商品</th>-->
+<!--									<th width="8%">单价</th>-->
+<!--									<th width="8%">数量</th>-->
+<!--									<th width="9%">小计</th>-->
+<!--									<th width="10%">售后</th>-->
+<!--									<th width="10%">状态</th>-->
+<!--									<th width="10%">操作</th>-->
+<!--								</tr>-->
+<!--							</thead>-->
+<!--							<tbody class="orders-body">-->
+<!--								<tr>-->
+<!--									<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>-->
+<!--									<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>-->
+<!--									<td>¥<span>5298</span></td>-->
+<!--									<td>1件</td>-->
+<!--									<td>¥<span>5298</span></td>-->
+<!--									<td><a href="#">申请售后</a></td>-->
+<!--									<td>-->
+<!--										<div>已发货</div>-->
+<!--										<div><a href="orderInfo.html">订单详情</a></div>-->
+<!--									</td>-->
+<!--									<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>-->
+<!--								</tr>-->
+<!--							</tbody>-->
+<!--						</table>-->
+<!--						<div>-->
+<!--							<span class="pull-right">订单总金额：¥5298</span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
 			</div>
 		</div>
 		<!--页脚开始-->
@@ -324,6 +335,84 @@
 			</div>
 		</footer>
 		<!--页脚结束-->
+
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				showCartList();
+			});
+			// var cids=[];
+			//展示购物车列表数据
+			function showCartList() {
+				$("#orders").empty();
+				$.ajax({
+					url: "/order",
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						var list = json.data;
+						var selectTotal=0;
+						var ids=0;
+						var time='';
+						var username='';
+						var statusid='';
+						for (var i = 0; i < list.length; i++) {
+							var tr = '<tr>\n' +
+									'<td><img src="..#{image}collect.png" class="img-responsive" /></td>\n' +
+									'<td>#{title}</td>\n' +
+									'<td>¥<span>#{price}</span></td>\n' +
+									'<td>#{num}件</td>\n' +
+									'<td>¥<span>#{all}</span></td>\n' +
+									'<td><a href="#">#{status}</a></td>\n' +
+									'<td>\n' +
+									'<div>已发货</div>\n' +
+									'<div><a href="orderInfo.html">订单详情</a></div>\n' +
+									'</td>\n' +
+									'<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>\n' +
+									'</tr>';
+							var all=list[i].num * list[i].price;
+							tr = tr.replaceAll(/#{image}/g, list[i].image);
+							tr = tr.replaceAll(/#{title}/g, list[i].title);
+							tr = tr.replaceAll(/#{price}/g, list[i].price);
+							tr = tr.replaceAll(/#{num}/g, list[i].num);
+							tr = tr.replaceAll(/#{all}/g, all);
+
+							if(list[i].status == 0){
+								statusid ='未支付';
+								tr = tr.replaceAll(/#{status}/g, statusid);
+							}else if(list[i].status == 1){
+								statusid ='已支付';
+								tr = tr.replaceAll(/#{status}/g, statusid);
+							} else if(list[i].status == 2){
+								statusid ='已取消';
+								tr = tr.replaceAll(/#{status}/g, statusid);
+							} else if(list[i].status == 3){
+								statusid ='已关闭';
+								tr = tr.replaceAll(/#{status}/g, statusid);
+							}else if(list[i].status == 4){
+								statusid ='已完成';
+								tr = tr.replaceAll(/#{status}/g, statusid);
+							}
+
+							$("#orders").append(tr);
+							selectTotal+=all;
+							ids=list[i].pid;
+							time=list[i].orderTime;
+							username=list[i].recvName;
+						}
+						$("#selsect-Tatals").html(selectTotal);
+						$("#ids").html(ids);//订单号
+						$("#time").html(time);//下单时间
+						$("#username").html(username);//收货人
+
+					},
+					error: function (xhr) {
+						alert("加载购物车列表数据时产生未知的异常"+xhr.status);
+					}
+				});
+			}
+
+		</script>
 	</body>
 
 </html>

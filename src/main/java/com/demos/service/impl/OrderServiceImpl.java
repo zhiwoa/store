@@ -10,6 +10,7 @@ import com.demos.service.IOrderService;
 import com.demos.service.IUserService;
 import com.demos.service.ex.InsertException;
 import com.demos.vo.CartVO;
+import com.demos.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +105,17 @@ public class OrderServiceImpl implements IOrderService {
             }
         }
         return order;
+    }
+
+    /**
+     * 展示完成支付之后的页面
+     *
+     * @param uid 用户的id
+     * @return 返回支付订单数据
+     */
+    @Override
+    public List<OrderVO> findOrderByUid(Integer uid) {
+        return orderMapper.findOrderByUid(uid);
     }
 
 //
